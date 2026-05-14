@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colores existentes */
+  --color-sidebar: #1d2331;
+
+  /* Primary */
+  --color-primary: #98D5A4;
+  --color-on-primary: #00391A;
+  --color-primary-container: #16512C;
+  --color-on-primary-container: #B3F1BF;
+
+  /* Secondary */
+  --color-secondary: #B7CCB8;
+  --color-on-secondary: #223526;
+  --color-secondary-container: #394B3C;
+  --color-on-secondary-container: #D2E8D3;
+
+  /* Tertiary */
+  --color-tertiary: #A2CED9;
+  --color-on-tertiary: #01363F;
+  --color-tertiary-container: #204D56;
+  --color-on-tertiary-container: #BDEAF5;
+
+  /* Error */
+  --color-error: #FFB4AB;
+  --color-on-error: #690005;
+  --color-error-container: #93000A;
+  --color-on-error-container: #FFDAD6;
+
+  /* Background & Surface */
+  --color-background: #101510;
+  --color-on-background: #DFE4DC;
+  --color-surface: #101510;
+  --color-on-surface: #DFE4DC;
+  --color-surface-variant: #414941;
+  --color-on-surface-variant: #C1C9BF;
+
+  /* Outline */
+  --color-outline: #8B938A;
+  --color-outline-variant: #414941;
+
+  /* Inverse */
+  --color-inverse-surface: #DFE4DC;
+  --color-inverse-on-surface: #2D322D;
+  --color-inverse: #316A42;
+
+  /* Scrim */
+  --color-scrim: #000000;
+}
