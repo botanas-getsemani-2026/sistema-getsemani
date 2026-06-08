@@ -5,10 +5,11 @@ import {
   User2Icon,
 } from "lucide-react";
 import { createContext, useContext, useState } from "react";
+import { formatUser } from "../../utils/formatUser";
 
 const SidebarContext = createContext();
 
-export function Sidebar({ children }) {
+export function Sidebar({ children, user }) {
   const [expanded, setExpanded] = useState(true);
 
   return (
@@ -42,15 +43,16 @@ export function Sidebar({ children }) {
             `}
           >
             <div className="leading-4">
-              <h4 className="font-semibold text-secondary">USUARIO PRUEBA</h4>
+              <h4 className="font-semibold text-secondary">{user?.user_metadata?.nombre} {user?.user_metadata?.pApellido}</h4>
               <span className="text-xs text-tertiary">
-                get1234@getsemani.com
+                {/* Usuario: {user?.email.split('@')[0]} */}
+                Usuario: {formatUser(user?.email)}
               </span>
             </div>
 
             <MoreVertical
               size={20}
-              className="text-primary transition-all hover:text-secondary hover:size-6"
+              className="text-primary transition-all hover:text-secondary"
             />
           </div>
         </div>
@@ -59,18 +61,21 @@ export function Sidebar({ children }) {
   );
 }
 
-export function SidebarItem({ icon, text, active, alert }) {
+export function SidebarItem({ icon, text, active, alert, onClick }) {
   const { expanded } = useContext(SidebarContext);
 
   return (
     <li
+      onClick={onClick}
       className={`relative flex items-center py-2 px-2 my-1 font-medium rounded-md cursor-pointer
     transition-colors group
     ${
       active
         ? "bg-linear-to-tr from-on-primary-container to-on-tertiary-container text-on-primary"
         : "hover: bg-primary text-secondary"
-    }`}
+    }
+    ${onClick ? 'cursor-pointer' : ''}
+    `}
     >
       <span className="text-on-primary">{icon}</span>
       <span
