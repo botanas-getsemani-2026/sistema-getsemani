@@ -40,7 +40,7 @@ Como usuario admnistrador/supervisor, quiero ver un filtro para vendedor por nom
   - Verde: autorizada
   - Amarillo: pendiente
   - Rojo: rechazada
-- Un status "rechazado" no debe poder cambiar la carga a "autorizada" o "pendiente". Se debe crear una nueva carga con el status "pendiente" y se debe registrar el log correspondiente. Se copian los productos de la carga rechazada y se asigna el status "pendiente" a la nueva carga.
+- Un status "rechazado" no debe poder cambiar la carga a "autorizada" o "pendiente" y se guardara el log en la tabla.
 - Por el momento no se toma en cuenta el inventario, solo se cambia el status de la carga.
 - Al rechazar, abrir un input para ingresar el motivo del rechazo.
 
@@ -54,11 +54,20 @@ Como usuario admnistrador/supervisor, quiero ver un filtro para vendedor por nom
 - La notificación debe contener el nombre, id, status, mensaje correspondiente y la fecha de cambio del status.
 - Se debe registrar el log correspondiente en su respectiva tabla cuando se envia la notificación.
 
+### Guardar carga actualizada
+- Al gregar un producto, este solo se debe agregar en la tabla
+- Debe haber un botón en el enbezado, "Guardar carga", este actualizara la carga, metiendo los productos nuevos y los que ya estaban
+- El botón solo aparecera si la carga fue modificada
+  - Debe aparecer siempre que se modifico algo
+  - Actualizar los detalles de la carga
+  - Para saber si debe o no aparecer, crear un flag local, hasChanges, que se activará si el usuario edita/agerga/elimina un producto
+- Si el usuario elimina/actualiza un producto, también lo debe eliminar/actualizar en la bd
+
 ### UI de Notificaciones.
 - Las notificación sería in-app, es decir, se mostraría una notificación en la interfaz de usuario.
   - toast popup en la esquina superior derecha
   - el usuario puede cerrar la notificación manualmente
-  - desaparece automáticamente después de 5 segundos
+  - desaparece automáticamente después de 3 segundos
 - el mesaje debe ser claro y conciso:
   - "Tu carga ha sido [status] ([mensaje] solo si fue rechazada)"
 
@@ -74,3 +83,62 @@ Como usuario admnistrador/supervisor, quiero ver un filtro para vendedor por nom
   - id de la carga
   - id del producto
   - cantidad
+
+## Contexto Técnico
+- Las tablas de log aún no esta implementadas
+- Estas son las tablas:
+
+cargas:
+```
+create table public.cargas (
+  id uuid not null,
+  id_usuario uuid not null,
+  fecha timestamp with time zone not null default now(),
+  status text not null default 'pendiente'::text,
+  id_carga_ref uuid null,
+  motivo_rechazo text null,
+  created_at timestamp with time zone not null default now(),
+  updated_at timestamp with time zone not null default now(),
+  constraint cargas_pk primary key (id),
+  constraint id_usuario_fk foreign KEY (id_usuario) references perfiles (id),
+  constraint cargas_status_check check (
+    (
+      status = any (
+        array[
+          'pendiente'::text,
+          'autorizada'::text,
+          'rechazada'::text
+        ]
+      )
+    )
+  )
+) TABLESPACE pg_default;
+
+create index IF not exists cargas_id_usuario_idx on public.cargas using btree (id_usuario) TABLESPACE pg_default;
+
+create index IF not exists cargas_fecha_idx on public.cargas using btree (fecha) TABLESPACE pg_default;
+```
+
+cargas_detalles:
+```
+create table public.cargas_detalles (
+  id uuid not null,
+  id_carga uuid not null,
+  id_producto uuid null,
+  codigo_producto text not null,
+  nombre_producto text not null,
+  precio_producto bigint not null,
+  cantidad numeric(10, 2) not null,
+  created_at timestamp with time zone not null default now(),
+  updated_at timestamp with time zone not null default now(),
+  constraint cargas_detalles_pk primary key (id),
+  constraint carga_id_fk foreign KEY (id_carga) references cargas (id) on delete CASCADE,
+  constraint prducto_id_fk foreign KEY (id_producto) references productos (id) on delete set null
+) TABLESPACE pg_default;
+
+create index IF not exists cd_id_carga_idx on public.cargas_detalles using btree (id_carga) TABLESPACE pg_default;
+
+create index IF not exists cd_id_producto_idx on public.cargas_detalles using btree (id_producto) TABLESPACE pg_default;
+
+create index IF not exists cd_codigo_producto_idx on public.cargas_detalles using btree (codigo_producto) TABLESPACE pg_default;
+```
