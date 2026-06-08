@@ -3,10 +3,10 @@
 ## Dev Commands
 
 ```bash
-npm run dev      # Start dev server
-npm run build    # Production build
-npm run lint     # Lint (ESLint)
-npm run preview  # Preview production build
+pnpm dev      # Start dev server
+pnpm build    # Production build
+pnpm lint     # Lint (ESLint)
+# npm run preview  # Preview production build
 ```
 
 ## Tailwind CSS 4
