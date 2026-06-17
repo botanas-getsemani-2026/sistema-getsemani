@@ -7,9 +7,9 @@ import { AddProductModal } from './components/AddProductModal'
 import { RejectModal } from './components/RejectModal'
 import { ToastContainer } from '../../components/ui/Toast'
 import { useToast } from './hooks/useToast'
-import { useUsersQueries, useCurrentUser } from './data/users'
+import { useUsersQueries, useCurrentUser } from '../../core/services/users'
 import { useLoadsQueries } from './data/loads'
-import { useProductsQueries } from './data/products'
+import { useProductsQueries } from '../../core/services/products'
 import {
 	useAuthorizeLoadMutation,
 	useRejectLoadMutation,
@@ -43,7 +43,7 @@ export function StockLoadPage() {
 	const [rejectModalOpen, setRejectModalOpen] = useState(false)
 	const [selectedLoadId, setSelectedLoadId] = useState(null)
 	const [rejectMotivo, setRejectMotivo] = useState('')
-  const [confirmModalOpen, setConfirmModalOpen] = useState(false)
+	const [confirmModalOpen, setConfirmModalOpen] = useState(false)
 
 	const authorizeMutation = useAuthorizeLoadMutation()
 	const rejectMutation = useRejectLoadMutation()
@@ -224,8 +224,8 @@ export function StockLoadPage() {
 		setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))
 	}
 
-  const handleConfirmModal = async () => {
-    if (!localLoads || !expandedLoadId) return
+	const handleConfirmModal = async () => {
+		if (!localLoads || !expandedLoadId) return
 
 		const currentLoad = localLoads.loads.find(l => l.id === expandedLoadId)
 		if (!currentLoad) return
@@ -243,13 +243,13 @@ export function StockLoadPage() {
 			})
 			success('Carga guardada correctamente')
 			setHasChanges(false)
-      setConfirmModalOpen(false)
+			setConfirmModalOpen(false)
 			const { data } = await refetch()
 			if (data) setLocalLoads(JSON.parse(JSON.stringify(data)))
 		} catch {
 			error('Error al guardar la carga')
 		}
-  }
+	}
 
 	const displayData = localLoads || vendorData
 
@@ -345,16 +345,16 @@ export function StockLoadPage() {
 				/>
 			)}
 
-      {confirmModalOpen && (
-        <ConfirmModal
-          title="Confirmar"
-          content="¿Estás seguro de que deseas guardar esta carga?"
-          isOpen={confirmModalOpen}
-          onClose={() => setConfirmModalOpen(false)}
-          onConfirm={handleConfirmModal}
-          toast={{ error, success, warning }}
-        />
-      )}
+			{confirmModalOpen && (
+				<ConfirmModal
+					title='Confirmar'
+					content='¿Estás seguro de que deseas guardar esta carga?'
+					isOpen={confirmModalOpen}
+					onClose={() => setConfirmModalOpen(false)}
+					onConfirm={handleConfirmModal}
+					toast={{ error, success, warning }}
+				/>
+			)}
 
 			<AddProductModal
 				isOpen={addModalOpen}

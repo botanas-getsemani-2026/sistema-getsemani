@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { useSupabaseClient } from "../../../core/providers/hooks/useSupabase";
+import { useSupabaseClient } from "../providers/hooks/useSupabase";
 import { useCallback } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 export const useUsersQueries = () => {
   const client = useSupabaseClient();
@@ -49,4 +50,19 @@ export const useCurrentUser = () => {
   }, [client]);
 
   return { currentUser, loading };
+};
+
+export const useUsers = (options = {}) => {
+  const client = useSupabaseClient()
+
+  return useQuery({
+    queryKey:['users'],
+    queryFn: async () => {
+      const {data, error} = await client.from('perfiles').select()
+      if (error) throw error
+      return data ?? []
+    },
+    staleTime: 5 * 60 * 1000,
+    ...options
+  })
 };
