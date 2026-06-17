@@ -72,7 +72,7 @@ export function SidebarItem({ icon, text, active, alert, onClick }) {
     ${
       active
         ? "bg-linear-to-tr from-on-primary-container to-on-tertiary-container text-on-primary"
-        : "hover: bg-primary text-secondary"
+        : "hover: bg-primary text-primary-container/80"
     }
     ${onClick ? 'cursor-pointer' : ''}
     `}
