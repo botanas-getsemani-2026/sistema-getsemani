@@ -1,64 +1,37 @@
-import { useState, useEffect } from "react";
-import { useSupabaseClient } from "../providers/hooks/useSupabase";
-import { useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useSupabaseClient } from "../providers/hooks/useSupabase";
 
-export const useUsersQueries = () => {
-  const client = useSupabaseClient();
-  const [users, setUsers] = useState([]);
-  const [user, setUser] = useState(null);
+export const useCurrentUser = (options = {}) => {
+  const client = useSupabaseClient()
 
-  const getUsers = useCallback(async () => {
-    const { data, error } = await client.from('perfiles').select();
-    if (error) throw error;
-    setUsers(data ?? []);
-    console.log(data);
-  }, [client]);
+  return useQuery({
+    queryKey: ['currentUser'],
+    queryFn: async () => {
+      const { data: { user }, error } = await client.auth.getUser();
 
-  const getCurrentUser = useCallback(async () => {
-    const { data: { user } } = await client.auth.getUser();
-    setUser(user);
-  }, [client])
+      if (error) throw error;
+      if (!user) return null;
 
-  return {
-    users,
-    user,
-    getUsers,
-    getCurrentUser,
-  };
-};
+      const { data: profile } = await client
+        .from('perfiles')
+        .select()
+        .eq('id', user.id)
+        .single();
 
-export const useCurrentUser = () => {
-  const client = useSupabaseClient();
-  const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const getUser = async () => {
-      const { data: { user } } = await client.auth.getUser();
-      if (user) {
-        const { data: profile } = await client
-          .from('perfiles')
-          .select('*')
-          .eq('id', user.id)
-          .single();
-        setCurrentUser(profile || user);
-      }
-      setLoading(false);
-    };
-    getUser();
-  }, [client]);
-
-  return { currentUser, loading };
+      return profile ?? user
+    },
+    staleTime: 5 * 60 * 1000,
+    ...options
+  })
 };
 
 export const useUsers = (options = {}) => {
   const client = useSupabaseClient()
 
   return useQuery({
-    queryKey:['users'],
+    queryKey: ['users'],
     queryFn: async () => {
-      const {data, error} = await client.from('perfiles').select()
+      const { data, error } = await client.from('perfiles').select()
       if (error) throw error
       return data ?? []
     },
