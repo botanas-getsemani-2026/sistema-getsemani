@@ -43,7 +43,7 @@ export function Sidebar({ children, user }) {
             `}
           >
             <div className="leading-4">
-              <h4 className="font-semibold text-secondary">{user?.user_metadata?.nombre} {user?.user_metadata?.pApellido}</h4>
+              <h4 className="font-semibold text-secondary">{user?.nombre} {user?.papellido}</h4>
               <span className="text-xs text-tertiary">
                 {/* Usuario: {user?.email.split('@')[0]} */}
                 Usuario: {formatUser(user?.email)}
