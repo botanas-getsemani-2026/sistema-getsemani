@@ -1,26 +1,26 @@
-import { useState, useEffect } from 'react'
 import { Plus, Save } from 'lucide-react'
+import { useState } from 'react'
+import { ToastContainer } from '../../components/ui/Toast'
+import { useProducts } from '../../core/services/products'
+import { useCurrentUser, useUsers } from '../../core/services/users'
+import { AddProductModal } from './components/AddProductModal'
+import { ConfirmModal } from './components/ConfirmModal'
+import { ProductEditModal } from './components/ProductEditModal'
+import { RejectModal } from './components/RejectModal'
 import { StockLoadFilters } from './components/StockLoadFilters'
 import { StockLoadTable } from './components/StockLoadTable'
-import { ProductEditModal } from './components/ProductEditModal'
-import { AddProductModal } from './components/AddProductModal'
-import { RejectModal } from './components/RejectModal'
-import { ToastContainer } from '../../components/ui/Toast'
-import { useToast } from './hooks/useToast'
-import { useUsersQueries, useCurrentUser } from '../../core/services/users'
 import { useLoadsQueries } from './data/loads'
-import { useProductsQueries } from '../../core/services/products'
 import {
 	useAuthorizeLoadMutation,
 	useRejectLoadMutation,
 	useSaveLoadDetailsMutation,
 } from './data/mutations'
-import { ConfirmModal } from './components/ConfirmModal'
+import { useToast } from './hooks/useToast'
 
 export function StockLoadPage() {
-	const { users, getUsers } = useUsersQueries()
-	const { currentUser } = useCurrentUser()
-	const { products } = useProductsQueries()
+	const { data: users } = useUsers()
+	const { data: currentUser } = useCurrentUser()
+	const { products } = useProducts()
 
 	const { toasts, removeToast, success, warning, error } = useToast()
 
@@ -30,7 +30,6 @@ export function StockLoadPage() {
 		selectedVendor?.id,
 		selectedDate,
 	)
-	console.log('vendorData:', vendorData)
 
 	const [localLoads, setLocalLoads] = useState(null)
 	const [expandedLoadId, setExpandedLoadId] = useState(null)
@@ -48,10 +47,6 @@ export function StockLoadPage() {
 	const authorizeMutation = useAuthorizeLoadMutation()
 	const rejectMutation = useRejectLoadMutation()
 	const saveMutation = useSaveLoadDetailsMutation()
-
-	useEffect(() => {
-		getUsers()
-	}, [getUsers])
 
 	const handleSearch = async () => {
 		if (!selectedVendor || !selectedDate) {

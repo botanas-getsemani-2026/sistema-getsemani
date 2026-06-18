@@ -24,7 +24,7 @@ export function StockLoadFilters({
           className="w-full px-3 py-2 bg-on-background border border-outline rounded-md text-on-primary"
         >
           <option value="">Selecciona un vendedor.</option>
-          {vendors.map(v => (
+          {(vendors ?? []).map(v => (
             <option key={v.id} value={v.id}>
               {v.nombre} {v.apellido} ({v.email.split('@')[0]})
             </option>
