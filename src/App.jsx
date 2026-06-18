@@ -1,41 +1,37 @@
-import { Truck } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { ShoppingCart, Truck } from 'lucide-react'
+import { NavLink, Outlet } from 'react-router'
 import { Sidebar, SidebarItem } from './components/ui/Sidebar'
-import { useUsersQueries } from './core/services/users'
-import { StockLoadPage } from './features/stockLoad/StockLoadPage'
-import { ShoppingCart } from 'lucide-react'
-import { SalesPage } from './features/sales/SalesPage'
+import { useCurrentUser } from './core/services/users'
 
 function App() {
-	const [activeView, setActiveView] = useState('ventas')
-	const { user, getCurrentUser } = useUsersQueries()
-
-	useEffect(() => {
-		getCurrentUser()
-	}, [getCurrentUser])
+	const { data: user } = useCurrentUser()
 
 	return (
 		<main className='App bg-background flex'>
 			<Sidebar user={user}>
-				<SidebarItem
-					icon={<Truck size={30} />}
-					text={'Cargas'}
-					active={activeView === 'cargas'}
-					onClick={() => setActiveView('cargas')}
-				/>
-        <SidebarItem
-          icon={<ShoppingCart size={30} />}
-          text={'Ventas'}
-          active={activeView === 'ventas'}
-          onClick={() => setActiveView('ventas')}
-        />
+				<NavLink to='/cargas'>
+					{({ isActive }) => (
+						<SidebarItem
+							icon={<Truck size={30} />}
+							text='Cargas'
+							active={isActive}
+						/>
+					)}
+				</NavLink>
+				<NavLink to='/ventas'>
+					{({ isActive }) => (
+						<SidebarItem
+							icon={<ShoppingCart size={30} />}
+							text='Ventas'
+							active={isActive}
+						/>
+					)}
+				</NavLink>
 			</Sidebar>
 			<div className='flex-1 overflow-auto'>
-				{activeView === 'cargas' && <StockLoadPage />}
-				{activeView === 'ventas' && <SalesPage />}
+				<Outlet />
 			</div>
 		</main>
 	)
 }
-
 export default App
