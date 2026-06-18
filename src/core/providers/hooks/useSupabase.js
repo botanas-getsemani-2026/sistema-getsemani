@@ -11,9 +11,3 @@ export const useSupabaseClient = () => {
   const { client } = useSupabaseContext();
   return client;
 };
-
-export const useCurrentUser = () => {
-  const { user, profile, loading } = useSupabaseContext();
-  return { user, profile, loading };
-};
-
