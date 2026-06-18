@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useSupabaseClient } from '../providers/hooks/useSupabase'
 
-export function useProductsQueries() {
+export function useProducts() {
   const client = useSupabaseClient()
 
   const fetchAllProducts = async () => {
