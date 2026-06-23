@@ -1,10 +1,10 @@
 import { Plus, Save } from 'lucide-react'
 import { useState } from 'react'
 import { ToastContainer } from '../../components/ui/Toast'
-import { useProducts } from '../../core/services/products'
+import { useAllProducts } from '../../core/services/products'
 import { useCurrentUser, useUsers } from '../../core/services/users'
 import { AddProductModal } from './components/AddProductModal'
-import { ConfirmModal } from './components/ConfirmModal'
+import { ConfirmModal } from '../../components/ui/ConfirmModal'
 import { ProductEditModal } from './components/ProductEditModal'
 import { RejectModal } from './components/RejectModal'
 import { StockLoadFilters } from './components/StockLoadFilters'
@@ -15,12 +15,12 @@ import {
 	useRejectLoadMutation,
 	useSaveLoadDetailsMutation,
 } from './data/mutations'
-import { useToast } from './hooks/useToast'
+import { useToast } from '../../core/hooks/useToast'
 
 export function StockLoadPage() {
 	const { data: users } = useUsers()
 	const { data: currentUser } = useCurrentUser()
-	const { products } = useProducts()
+	const { data: products = [] } = useAllProducts()
 
 	const { toasts, removeToast, success, warning, error } = useToast()
 
