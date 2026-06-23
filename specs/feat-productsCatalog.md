@@ -24,7 +24,7 @@ Como usuario quiero ver o consultar el catalog de productos a la hora de editar 
 - Stack: React 19, Tailwind CSS 4, Supabase
 - Respeta el diseño y adapta la UI a los colores y estilos definidos en el diseño.
 - Diseño del tabla en Supabase:
-```
+```sql
 create table public.productos (
   id uuid not null default gen_random_uuid (),
   codigo text not null,
@@ -34,7 +34,19 @@ create table public.productos (
   logo_res text not null,
   created_at timestamp with time zone null default now(),
   updated_at timestamp with time zone null default now(),
+  estado text not null default 'activo'::text,
   constraint productos_pkey primary key (id),
-  constraint productos_codigo_key unique (codigo)
+  constraint productos_codigo_key unique (codigo),
+  constraint estadochk check (
+    (
+      estado = any (
+        array[
+          'activo'::text,
+          'inactivo'::text,
+          'descontinuado'::text
+        ]
+      )
+    )
+  )
 ) TABLESPACE pg_default;
 ```
