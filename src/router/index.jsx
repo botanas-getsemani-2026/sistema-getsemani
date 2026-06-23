@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate } from 'react-router'
 import { ProtectedRoute } from './ProtectedRoute'
+import { ProductsPage } from '../features/products/ProductsPage'
 import { SalesPage } from '../features/sales/SalesPage'
 import { StockLoadPage } from '../features/stockLoad/StockLoadPage'
 import App from '../App'
@@ -15,6 +16,7 @@ export const router = createBrowserRouter([
 					{ index: true, element: <Navigate to='/ventas' replace /> },
 					{ path: 'ventas', element: <SalesPage /> },
 					{ path: 'cargas', element: <StockLoadPage /> },
+					{ path: 'productos', element: <ProductsPage /> },
 				],
 			},
 		],
