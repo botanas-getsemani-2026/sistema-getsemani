@@ -1,4 +1,4 @@
-import { ShoppingCart, Truck } from 'lucide-react'
+import { Package, ShoppingCart, Truck } from 'lucide-react'
 import { NavLink, Outlet } from 'react-router'
 import { Sidebar, SidebarItem } from './components/ui/Sidebar'
 import { useCurrentUser } from './core/services/users'
@@ -7,7 +7,7 @@ function App() {
 	const { data: user } = useCurrentUser()
 
 	return (
-		<main className='App bg-background flex'>
+		<main className='App bg-background flex h-screen overflow-hidden'>
 			<Sidebar user={user}>
 				<NavLink to='/cargas'>
 					{({ isActive }) => (
@@ -23,6 +23,15 @@ function App() {
 						<SidebarItem
 							icon={<ShoppingCart size={30} />}
 							text='Ventas'
+							active={isActive}
+						/>
+					)}
+				</NavLink>
+				<NavLink to='/productos'>
+					{({ isActive }) => (
+						<SidebarItem
+							icon={<Package size={30} />}
+							text='Productos'
 							active={isActive}
 						/>
 					)}
