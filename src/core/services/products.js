@@ -1,23 +1,20 @@
 import { useQuery } from '@tanstack/react-query'
 import { useSupabaseClient } from '../providers/hooks/useSupabase'
 
-export function useProducts() {
+export function useAllProducts() {
   const client = useSupabaseClient()
 
-  const fetchAllProducts = async () => {
-    const { data, error } = await client
-      .from('productos')
-      .select('*')
-      .order('nombre')
-    if (error) throw error
-    return data
-  }
+  return useQuery({
+    queryKey: ['products', 'all'],
+    queryFn: async () => {
+      const { data, error } = await client
+        .from('productos')
+        .select('*')
+        .order('nombre')
 
-  const { data: products = [], isLoading, error } = useQuery({
-    queryKey: ['products'],
-    queryFn: fetchAllProducts,
-    staleTime: Infinity,
+      if (error) throw error
+      return data ?? []
+    },
+    staleTime: 5 * 60 * 1000,
   })
-
-  return { products, isLoading, error }
 }
