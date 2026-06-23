@@ -6,8 +6,6 @@ import { Navigate } from 'react-router'
 export function ProtectedRoute() {
   const {data: user, isLoading} = useCurrentUser()
 
-  console.log(isLoading, user)
-
   if (isLoading) return <Loader/>
   if (!user) return <Navigate to='/login' replace/> 
   
