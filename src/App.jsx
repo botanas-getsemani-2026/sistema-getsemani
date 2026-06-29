@@ -1,4 +1,4 @@
-import { Package, ShoppingCart, Truck } from 'lucide-react'
+import { Package, ShoppingCart, Truck, Users } from 'lucide-react'
 import { NavLink, Outlet } from 'react-router'
 import { Sidebar, SidebarItem } from './components/ui/Sidebar'
 import { useCurrentUser } from './core/services/users'
@@ -32,6 +32,15 @@ function App() {
 						<SidebarItem
 							icon={<Package size={30} />}
 							text='Productos'
+							active={isActive}
+						/>
+					)}
+				</NavLink>
+				<NavLink to='/vendedores'>
+					{({ isActive }) => (
+						<SidebarItem
+							icon={<Users size={30} />}
+							text='Vendedores'
 							active={isActive}
 						/>
 					)}
