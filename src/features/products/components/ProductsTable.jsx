@@ -4,7 +4,7 @@ import {
   PRODUCT_STATUS_COLORS,
 } from '../../../constants/products'
 import { formatCurrency } from '../../../utils/currencyUtils'
-import { Pagination } from '../../sales/components/Pagination'
+import { Pagination } from '../../../components/ui/Pagination'
 
 const STATUS_LABELS = {
   [PRODUCTS_STATUS.ACTIVE]: 'Activo',

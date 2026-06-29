@@ -1,6 +1,6 @@
 import { formatCurrency } from '../../../utils/currencyUtils'
 import { formatDate } from '../../../utils/dateUtils'
-import { Pagination } from './Pagination'
+import { Pagination } from '../../../components/ui/Pagination'
 
 export function SalesTable({
 	sales,
