@@ -26,12 +26,37 @@ export function SalesFilters({
 				</div>
 
 				{selectedFilterType === 'fecha' && (
-					<input
-						className='px-3 py-2 bg-on-background border w-full border-outline rounded-md'
-						type='date'
-						value={selectedFilterValue}
-						onChange={e => onFilterValueChange(e.target.value)}
-					/>
+					<div className='flex items-center justify-center gap-2 w-full h-full'>
+						<label className='flex items-center text-sm w-full text-on-surface-variant gap-1'>
+							Desde
+							<input
+								className='px-3 py-2 bg-on-background border border-outline rounded-md text-on-primary w-full'
+								type='date'
+								value={selectedFilterValue?.from ?? ''}
+								onChange={e =>
+									onFilterValueChange({
+										...(selectedFilterValue ?? {}),
+										from: e.target.value,
+									})
+								}
+							/>
+						</label>
+						<label className='flex items-center text-sm w-full text-on-surface-variant gap-1'>
+							Hasta
+							<input
+								className='px-3 py-2 bg-on-background border border-outline rounded-md text-on-primary w-full'
+								type='date'
+								value={selectedFilterValue?.to ?? ''}
+								min={selectedFilterValue?.from || undefined}
+								onChange={e =>
+									onFilterValueChange({
+										...(selectedFilterValue ?? {}),
+										to: e.target.value,
+									})
+								}
+							/>
+						</label>
+					</div>
 				)}
 				{selectedFilterType === 'vendedor' && (
 					<select
