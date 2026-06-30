@@ -1,6 +1,7 @@
 import { formatCurrency } from '../../../utils/currencyUtils'
 import { formatDate } from '../../../utils/dateUtils'
 import { Pagination } from '../../../components/ui/Pagination'
+import { isFilterActive } from '../data/sales'
 
 export function SalesTable({
 	sales,
@@ -13,7 +14,7 @@ export function SalesTable({
 	onPageChange,
 	onPageSizeChange,
 }) {
-	const hasFilter = !!filter?.value
+	const hasFilter = isFilterActive(filter)
 	const showLoading = isLoading && sales.length === 0
 	const showEmpty = !isLoading && total === 0
 
