@@ -22,7 +22,7 @@ export function SalesPage() {
 
 	const handleFilterTypeChange = type => {
 		setSelectedFilterType(type)
-		setSelectedFilterValue('')
+		setSelectedFilterValue(type === 'fecha' ? { from: '', to: '' } : '')
 		setPage(1)
 	}
 
