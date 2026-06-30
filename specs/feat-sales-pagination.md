@@ -40,6 +40,13 @@ Como usuario administrador/supervisor quiero ver las ventas en una tabla paginad
 - El módulo de ventas ya expone dos filtros: tipo y valor.
 - La paginación debe coexistir con los filtros actuales: el total reportado y la navegación deben reflejar solo las ventas que coincidan con el filtro activo.
 - Al cambiar el tipo o valor del filtro, resetear a la primera página.
+- Debe haber los siguientes filtros:
+  - Por rango de fechas con dos inputs de tipo date para más control
+    - Si no hay filtros la query no ejecuta y la tabla muestrna "Aplica un filtro..."
+    - Agregar un helper que viva en `sales.js` para poder reutilizarlo y evitar duplicación
+  - Por día (una fecha especifica)
+  - Por vendedor
+  - Por código (id) de tienda
 
 ## Contexto Técnico.
 - Stack: React 19, Tailwind CSS 4, Supabase, TanStack Query v5.
@@ -62,7 +69,7 @@ Como usuario administrador/supervisor quiero ver las ventas en una tabla paginad
 - Para precios, se utiliza el método de decimales como enteros, así que en `src/utils` hay una función que ya formatea la cantidad.
 - El filtro por fecha ya esta soportado, se puede ver en el if donde se valida el tipo de filtro.
 - La variable activeFilter, es un objeto que recibe le tipo de filtro que se esta seleccionando, para poder entrar en el bloque correcto
-  - fecha (debe ser por rango de fechas)
+  - fecha
   - vendedor
   - tienda (id/código)
 
