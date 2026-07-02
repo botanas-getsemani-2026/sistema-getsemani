@@ -1,12 +1,17 @@
 import { createBrowserRouter, Navigate } from 'react-router'
-import { ProtectedRoute } from './ProtectedRoute'
+import App from '../App'
+import LoginPage from '../features/login/LoginPage'
 import { ProductsPage } from '../features/products/ProductsPage'
 import { SalesPage } from '../features/sales/SalesPage'
 import { StockLoadPage } from '../features/stockLoad/StockLoadPage'
 import { VendorsPage } from '../features/vendors/VendorsPage'
-import App from '../App'
+import { ProtectedRoute } from './ProtectedRoute'
 
 export const router = createBrowserRouter([
+  {
+    path: '/login',
+    element: <LoginPage />,
+  },
 	{
 		path: '/',
 		element: <ProtectedRoute />,
