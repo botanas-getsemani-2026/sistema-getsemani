@@ -6,11 +6,15 @@ import { SalesPage } from '../features/sales/SalesPage'
 import { StockLoadPage } from '../features/stockLoad/StockLoadPage'
 import { VendorsPage } from '../features/vendors/VendorsPage'
 import { ProtectedRoute } from './ProtectedRoute'
+import { PublicOnlyRoute } from './PublicOnlyRoute'
 
 export const router = createBrowserRouter([
   {
     path: '/login',
-    element: <LoginPage />,
+    element: <PublicOnlyRoute />,
+    children: [
+      {index: true, element: <LoginPage />},
+    ]
   },
 	{
 		path: '/',
