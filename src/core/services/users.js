@@ -2,24 +2,20 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useSupabaseClient } from '../providers/hooks/useSupabase'
 import { VENDOR_STATUS_FILTER } from '../../constants/vendors'
 
-export const useCurrentUser = (options = {}) => {
+export const useCurrentUser = (userId, options = {}) => {
   const client = useSupabaseClient()
 
   return useQuery({
-    queryKey: ['currentUser'],
+    queryKey: ['currentUser', userId],
     queryFn: async () => {
-      const { data: { user }, error } = await client.auth.getUser();
-
-      if (error) throw error;
-      if (!user) return null;
-
-      const { data: profile } = await client
+      const { data, error } = await client
         .from('perfiles')
         .select()
-        .eq('id', user.id)
+        .eq('id', userId)
         .single();
 
-      return profile ?? user
+      if (error) throw error
+      return data
     },
     staleTime: 5 * 60 * 1000,
     ...options
