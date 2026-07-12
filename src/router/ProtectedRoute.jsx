@@ -1,12 +1,14 @@
-import { Outlet } from 'react-router'
-import { useCurrentUser } from '../core/services/users'
-import { Loader } from 'lucide-react'
-import { Navigate } from 'react-router'
+import { Loader } from '../components/ui/Loader'
+import { useContext } from 'react'
+import { Navigate, Outlet } from 'react-router'
+import { SupabaseContext } from '../core/providers/SupabaseContext'
 
 export function ProtectedRoute() {
-  const {data: user, isLoading} = useCurrentUser()
+  const { user, loading } = useContext(SupabaseContext)
 
-  if (isLoading) return <Loader/>
+  console.log('ProtectedRoute user:', user, 'isLoading:', loading)
+
+  if (loading) return <Loader/>
   if (!user) return <Navigate to='/login' replace/> 
   
   return <Outlet/>
