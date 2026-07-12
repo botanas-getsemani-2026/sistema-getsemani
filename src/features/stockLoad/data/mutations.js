@@ -7,7 +7,7 @@ export function useLoadMutations() {
   // const createLogMutation = useCreateLogMutation();
   // const createNotificationMutation = useCreateNotificationMutation();
 
-  const authorizeLoad = async ({ loadId, userId }) => {
+  const authorizeLoad = async ({ loadId }) => {
     const { data: loadData, error: loadError } = await client
       .from('cargas')
       .update({ status: 'autorizada' })
@@ -35,7 +35,7 @@ export function useLoadMutations() {
     return loadData;
   };
 
-  const rejectLoad = async ({ loadId, motivo, userId }) => {
+  const rejectLoad = async ({ loadId, motivo }) => {
     const { data: loadData, error: loadError } = await client
       .from('cargas')
       .update({ status: 'rechazada', motivo_rechazo: motivo })
