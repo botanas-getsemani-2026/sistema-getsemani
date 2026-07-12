@@ -16,10 +16,12 @@ import {
 	useSaveLoadDetailsMutation,
 } from './data/mutations'
 import { useToast } from '../../core/hooks/useToast'
+import { useSupabaseContext } from '../../core/providers/hooks/useSupabase'
 
 export function StockLoadPage() {
 	const { data: users } = useUsers()
-	const { data: currentUser } = useCurrentUser()
+  const { user } = useSupabaseContext()
+	const { data: currentUser } = useCurrentUser(user?.id)
 	const { data: products = [] } = useAllProducts()
 
 	const { toasts, removeToast, success, warning, error } = useToast()

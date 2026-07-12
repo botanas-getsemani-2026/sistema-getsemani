@@ -2,13 +2,15 @@ import { Package, ShoppingCart, Truck, Users } from 'lucide-react'
 import { NavLink, Outlet } from 'react-router'
 import { Sidebar, SidebarItem } from './components/ui/Sidebar'
 import { useCurrentUser } from './core/services/users'
+import { useSupabaseContext } from './core/providers/hooks/useSupabase'
 
 function App() {
-	const { data: user } = useCurrentUser()
+  const { user } = useSupabaseContext()
+	const { data: currentUser } = useCurrentUser(user?.id)
 
 	return (
 		<main className='App bg-background flex h-screen overflow-hidden'>
-			<Sidebar user={user}>
+			<Sidebar user={currentUser}>
 				<NavLink to='/cargas'>
 					{({ isActive }) => (
 						<SidebarItem
