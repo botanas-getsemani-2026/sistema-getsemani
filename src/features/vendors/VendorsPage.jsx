@@ -15,7 +15,7 @@ import {
 
 export function VendorsPage() {
   const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(5)
+  const [pageSize, setPageSize] = useState(50)
   const [searchName, setSearchName] = useState('')
   const [searchEmail, setSearchEmail] = useState('')
   const [statusFilter, setStatusFilter] = useState(VENDOR_STATUS_FILTER.ALL)
