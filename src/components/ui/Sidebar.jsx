@@ -1,16 +1,22 @@
 import {
   ChevronFirst,
   ChevronLast,
-  MoreVertical,
-  User2Icon,
+  LogOutIcon,
+  User2Icon
 } from "lucide-react";
 import { createContext, useContext, useState } from "react";
 import { formatUser } from "../../utils/formatUser";
+import { useSignOut } from "../../core/services/auth";
 
 const SidebarContext = createContext();
 
 export function Sidebar({ children, user }) {
   const [expanded, setExpanded] = useState(true);
+  const { signOut } = useSignOut();
+
+  const handleLogoutClick = async () => {
+    await signOut();
+  }
 
   return (
     <aside className={`h-screen p-0 flex transition-all`}>
@@ -50,10 +56,12 @@ export function Sidebar({ children, user }) {
               </span>
             </div>
 
-            <MoreVertical
+            <button type="button" onClick={handleLogoutClick} className="ml-2">
+              <LogOutIcon
               size={20}
               className="text-primary transition-all hover:text-secondary"
             />
+            </button>
           </div>
         </div>
       </nav>
