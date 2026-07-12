@@ -1,60 +1,47 @@
-import { createClient } from "@supabase/supabase-js/dist/index.cjs";
-import { useState, useEffect } from "react";
-import { SupabaseContext } from "./SupabaseContext";
+import { createClient } from '@supabase/supabase-js/dist/index.cjs'
+import { useState, useEffect } from 'react'
+import { SupabaseContext } from './SupabaseContext'
+import { useQueryClient } from '@tanstack/react-query'
 
 const client = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-);
-
-const signIn = async () => {
-  const { data, error } = await client.auth.signInWithPassword({
-    email: 'get1234@getsemani.com',
-    password: 'Get2026',
-  });
-
-  if (error) throw new Error(error.message);
-
-  const { data: profileData, error: profileDataError } = await client
-    .from("perfiles")
-    .select()
-    .eq("id", data.user.id)
-    .single();
-
-  if (profileDataError) throw new Error(profileDataError.message);
-
-  return { user: data.user, profile: profileData };
-};
+	import.meta.env.VITE_SUPABASE_URL,
+	import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+)
 
 export function SupabaseProvider({ children }) {
-  // const [client] = useState(() =>
-  //   createClient(
-  //     import.meta.env.VITE_SUPABASE_URL,
-  //     import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-  //   ),
-  // );
+	const [user, setUser] = useState(null)
+	const [loading, setLoading] = useState(true)
+	const queryClient = useQueryClient()
 
-  const [user, setUser] = useState(null);
-  const [profile, setProfile] = useState(null);
-  const [loading, setLoading] = useState(true);
+	useEffect(() => {
+		client.auth
+			.getSession()
+			.then(({ data: { session } }) => {
+				setUser(session?.user ?? null)
+			})
+			.catch(error => {
+				console.error('Error getting session:', error)
+			})
+			.finally(() => {
+				setLoading(false)
+			})
 
-  useEffect(() => {
-    signIn()
-      .then(({ user, profile }) => {
-        setUser(user);
-        setProfile(profile);
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+		const {
+			data: { subscription },
+		} = client.auth.onAuthStateChange((event, session) => {
+			setUser(session?.user ?? null)
 
-  return (
-    <SupabaseContext.Provider value={{ client, user, profile, loading }}>
-      {children}
-    </SupabaseContext.Provider>
-  );
+			if (event === 'SIGNED_OUT') {
+				queryClient.clear()
+			}
+		})
+
+		return () => subscription.unsubscribe()
+	}, [queryClient])
+
+	return (
+		<SupabaseContext.Provider value={{ client, user, loading }}>
+			{children}
+		</SupabaseContext.Provider>
+	)
 }
