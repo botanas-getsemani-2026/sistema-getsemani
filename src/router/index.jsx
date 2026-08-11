@@ -4,8 +4,8 @@ import { ProductsPage } from '../features/products/ProductsPage'
 import { SalesPage } from '../features/sales/SalesPage'
 import { StockLoadPage } from '../features/stockLoad/StockLoadPage'
 import { VendorsPage } from '../features/vendors/VendorsPage'
-import { ComisionesPage } from '../features/comisiones/ComisionesPage'
-import { PeriodosPage } from '../features/comisiones/PeriodosPage'
+import { CommissionsPage } from '../features/comisiones/CommissionsPage'
+import { PeriodsPage } from '../features/comisiones/PeriodsPage'
 import App from '../App'
 
 export const router = createBrowserRouter([
@@ -21,8 +21,8 @@ export const router = createBrowserRouter([
 					{ path: 'cargas', element: <StockLoadPage /> },
 					{ path: 'productos', element: <ProductsPage /> },
 					{ path: 'vendedores', element: <VendorsPage /> },
-					{ path: 'comisiones', element: <ComisionesPage /> },
-					{ path: 'comisiones/periodos', element: <PeriodosPage /> },
+					{ path: 'comisiones', element: <CommissionsPage /> },
+					{ path: 'comisiones/periodos', element: <PeriodsPage /> },
 				],
 			},
 		],
