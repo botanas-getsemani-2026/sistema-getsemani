@@ -9,6 +9,7 @@ import { CommissionsPage } from '../features/comisiones/CommissionsPage'
 import { PeriodsPage } from '../features/comisiones/PeriodsPage'
 import { ProtectedRoute } from './ProtectedRoute'
 import { PublicOnlyRoute } from './PublicOnlyRoute'
+import { ClientsPage } from '../features/clients/ClientsPage'
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +30,7 @@ export const router = createBrowserRouter([
 					{ path: 'ventas', element: <SalesPage /> },
 					{ path: 'cargas', element: <StockLoadPage /> },
 					{ path: 'productos', element: <ProductsPage /> },
+					{ path: 'clientes', element: <ClientsPage /> },
 					{ path: 'vendedores', element: <VendorsPage /> },
 					{ path: 'comisiones', element: <CommissionsPage /> },
 					{ path: 'comisiones/periodos', element: <PeriodsPage /> },
