@@ -1,4 +1,4 @@
-import { Package, ShoppingCart, Truck, Users, Wallet } from 'lucide-react'
+import { Package, ShoppingCart, Store, Truck, Users, Wallet } from 'lucide-react'
 import { NavLink, Outlet } from 'react-router'
 import { Sidebar, SidebarItem } from './components/ui/Sidebar'
 import { useCurrentUser } from './core/services/users'
@@ -34,6 +34,15 @@ function App() {
 						<SidebarItem
 							icon={<Package size={30} />}
 							text='Productos'
+							active={isActive}
+						/>
+					)}
+				</NavLink>
+				<NavLink to='/clientes'>
+					{({ isActive }) => (
+						<SidebarItem
+							icon={<Store size={30} />}
+							text='Clientes'
 							active={isActive}
 						/>
 					)}
