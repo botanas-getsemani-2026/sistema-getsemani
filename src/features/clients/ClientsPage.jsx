@@ -39,15 +39,17 @@ export function ClientsPage() {
   const { toasts, removeToast, success, error: errorToast } = useToast()
 
   const vendorId = useMemo(() => {
-    if (!vendorApplied) return null
+    if (!vendorApplied) return ''
     const match = users.find((u) => u.id === vendorApplied)
-    return match?.id ?? null
+    return match?.id ?? ''
   }, [vendorApplied, users])
 
   const filters = useMemo(
     () => ({ search: searchApplied, id_usuario: vendorId }),
-    [searchApplied, vendorId],
+    [searchApplied, vendorId],  
   )
+
+  console.log('filters', filters)
 
   const { clients, total, isLoading, isFetching } = useClientsPaginated(
     filters,
@@ -217,6 +219,7 @@ export function ClientsPage() {
         isOpen={confirmOpen}
         title={confirmTitle}
         content={confirmContent}
+        isPending={isSubmitting || deleteMutation.isPending}
         onClose={() => {
           setConfirmOpen(false)
           setPendingPayload(null)
