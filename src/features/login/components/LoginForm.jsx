@@ -1,6 +1,7 @@
 import { EyeClosed } from 'lucide-react'
 import { Eye } from 'lucide-react'
 import { useState } from 'react'
+import logoImage from 'src/assets/getsemani-logo-v3-name.webp'
 
 export default function LoginForm({
 	username,
@@ -20,7 +21,7 @@ export default function LoginForm({
 			onSubmit={onSubmit}
 			className='bg-on-primary-container flex flex-col justify-center items-center gap-8 w-1/3 h-1/2 p-8 border rounded-md'
 		>
-			<img src='src/assets/getsemani-logo-v3-name.webp' alt='Getsemani Logo' />
+			<img src={logoImage} alt='Getsemani Logo' />
 			<input
 				className='w-full p-2 border border-on-primary rounded-sm text-primary-container text-lg focus:outline-none focus:ring-primary-container focus:ring-1'
 				name='username'
