@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router'
-import { Wallet } from 'lucide-react'
+import { Wallet, Loader2 } from 'lucide-react'
 import { ToastContainer } from '../../components/ui/Toast'
 import { ConfirmModal } from '../../components/ui/ConfirmModal'
 import { Tabs } from '../../components/ui/Tabs'
@@ -221,7 +221,7 @@ export function CommissionsPage() {
             />
 
             {showReport && (
-              <>
+              <div className='relative space-y-4'>
                 {showEmpty ? (
                   <EmptyState message={EMPTY_RANGE_MESSAGE} />
                 ) : (
@@ -262,7 +262,18 @@ export function CommissionsPage() {
                     )}
                   </>
                 )}
-              </>
+
+                {anyQueryFetching && !hasAnyData && (
+                  <div className='absolute inset-0 z-20 flex items-center justify-center bg-background/80 backdrop-blur-sm rounded-lg'>
+                    <div className='flex flex-col items-center gap-3'>
+                      <Loader2 className='animate-spin text-primary' size={40} />
+                      <p className='text-on-surface-variant text-sm'>
+                        Cargando reporte…
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
           </div>
         )}
@@ -284,6 +295,7 @@ export function CommissionsPage() {
 				isOpen={!!confirmPaid}
 				title='Marcar como pagado'
 				content={`¿Marcar el periodo ${confirmPaid?.fecha_inicio ?? ''} como pagado? Esta acción no se puede deshacer.`}
+				isPending={markPaidMutation.isPending}
 				onClose={() => setConfirmPaid(null)}
 				onConfirm={handleConfirmMarkPaid}
 			/>
@@ -292,6 +304,7 @@ export function CommissionsPage() {
 				isOpen={!!confirmDelete}
 				title='Eliminar periodo'
 				content={`¿Eliminar el periodo ${confirmDelete?.fecha_inicio ?? ''}? Esta acción no se puede deshacer.`}
+				isPending={deleteMutation.isPending}
 				onClose={() => setConfirmDelete(null)}
 				onConfirm={handleConfirmDelete}
 			/>

@@ -79,21 +79,23 @@ export function PeriodsPage() {
 				busyId={busyId}
 			/>
 
-			<ConfirmModal
-				isOpen={!!confirmPaid}
-				title='Marcar como pagado'
-				content={`¿Marcar el periodo ${confirmPaid?.fecha_inicio ?? ''} como pagado? Esta acción no se puede deshacer.`}
-				onClose={() => setConfirmPaid(null)}
-				onConfirm={handleConfirmMarkPaid}
-			/>
+<ConfirmModal
+        isOpen={!!confirmPaid}
+        title='Marcar como pagado'
+        content={`¿Marcar el periodo ${confirmPaid?.fecha_inicio ?? ''} como pagado? Esta acción no se puede deshacer.`}
+        isPending={markPaidMutation.isPending}
+        onClose={() => setConfirmPaid(null)}
+        onConfirm={handleConfirmMarkPaid}
+      />
 
-			<ConfirmModal
-				isOpen={!!confirmDelete}
-				title='Eliminar periodo'
-				content={`¿Eliminar el periodo ${confirmDelete?.fecha_inicio ?? ''}? Esta acción no se puede deshacer.`}
-				onClose={() => setConfirmDelete(null)}
-				onConfirm={handleConfirmDelete}
-			/>
+      <ConfirmModal
+        isOpen={!!confirmDelete}
+        title='Eliminar periodo'
+        content={`¿Eliminar el periodo ${confirmDelete?.fecha_inicio ?? ''}? Esta acción no se puede deshacer.`}
+        isPending={deleteMutation.isPending}
+        onClose={() => setConfirmDelete(null)}
+        onConfirm={handleConfirmDelete}
+      />
 
 			<ToastContainer toasts={toasts} onClose={removeToast} />
 		</section>

@@ -124,6 +124,7 @@ export function DateRangeForm({
 				content={`¿Generar el reporte de comisiones del ${formatDateLong(
 					startDate,
 				)} al ${formatDateLong(endDate)}?`}
+				isPending={isGenerating}
 				onClose={() => setConfirmOpen(false)}
 				onConfirm={handleConfirm}
 			/>
