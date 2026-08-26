@@ -8,6 +8,7 @@ export const useCurrentUser = (userId, options = {}) => {
   return useQuery({
     queryKey: ['currentUser', userId],
     queryFn: async () => {
+      if (!userId) return null
       const { data, error } = await client
         .from('perfiles')
         .select()
@@ -17,6 +18,7 @@ export const useCurrentUser = (userId, options = {}) => {
       if (error) throw error
       return data
     },
+    enabled: !!userId,
     staleTime: 5 * 60 * 1000,
     ...options
   })

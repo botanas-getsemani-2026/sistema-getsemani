@@ -162,6 +162,7 @@ export function VendorsPage() {
         isOpen={confirmOpen}
         title={confirmTitle}
         content={confirmContent}
+        isPending={isSubmitting}
         onClose={() => {
           setConfirmOpen(false)
         }}

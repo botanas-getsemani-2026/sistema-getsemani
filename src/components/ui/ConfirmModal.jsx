@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useRef } from 'react'
 
-export function ConfirmModal({ isOpen, onClose, onConfirm, title, content }) {
+export function ConfirmModal({ isOpen, onClose, onConfirm, title, content, isPending = false }) {
 	const dialogRef = useRef(null)
 
 	useEffect(() => {
@@ -30,12 +30,13 @@ export function ConfirmModal({ isOpen, onClose, onConfirm, title, content }) {
 					>
 						Cancelar
 					</button>
-					<button
-						className='bg-primary hover:bg-primary/80 text-on-primary py-2 px-4 rounded'
-						onClick={onConfirm}
-					>
-						Confirmar
-					</button>
+<button
+					className='bg-primary hover:bg-primary/80 text-on-primary py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed'
+					onClick={onConfirm}
+					disabled={isPending}
+				>
+					Confirmar
+				</button>
 				</section>
 			</section>
 		</dialog>

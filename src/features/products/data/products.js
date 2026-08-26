@@ -12,7 +12,7 @@ export function useProducts(filters = {}, page = 1, pageSize = 50) {
     let query = client
       .from('productos')
       .select('*', { count: 'exact' })
-      .order('nombre')
+      .order('orden')
       .range(from, to)
 
     const term = filters.searchTerm?.trim()
