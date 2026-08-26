@@ -17,9 +17,11 @@ Como usuario admnistrador/supervisor, quiero ver un filtro para vendedor por nom
 - La tabla debe mostrar los resultados de la búsqueda en formato de tabla.
 - La tabla debe mostrar los campos: nombre del producto, cantidad, precio unitario, precio total
 - La tabla debería tener como encabezado la fecha de carga.
-- La tabla debería permitir ordenar los resultados por cantidad de productos de forma ASC o DESC
-  - de los productos con una mayor cantidad a los de menor cantidad, que se pieden en la carga
+- La tabla debería permitir ordenar los resultados por la propiedad `orden` del producto de forma ASC o DESC
+  - `orden` es una propiedad numérica ya existente en la tabla `productos` (la misma que se usa como orden por defecto del catálogo en `/productos`)
   - Permitir que el usuario pueda elegir el orden de los resultados
+  - El botón para alternar el orden vive en el encabezado de la columna "Producto" y un botón general "Ordenar ↑/↓" arriba de la tabla
+  - Si un producto no tiene `orden` definido (null/undefined): se coloca al final en ASC y al inicio en DESC
 - La tabla debería permitir poder quitar o añadir productos del catálogo a la carga consultada.
 - La tabla debería permitir poder editar los productos en un modal con un formulario con los campos:
   - código del producto (solo de lectura)

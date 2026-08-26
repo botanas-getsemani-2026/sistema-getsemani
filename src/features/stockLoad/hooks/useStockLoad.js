@@ -17,10 +17,19 @@ export function useStockLoad() {
 
   const ordenarProductos = useCallback((productos, order) => {
     return [...productos].sort((a, b) => {
+      const aOrden = a.product?.orden;
+      const bOrden = b.product?.orden;
+      const aHas = aOrden != null;
+      const bHas = bOrden != null;
+
+      if (!aHas && !bHas) return 0;
+      if (!aHas) return order === 'asc' ? 1 : -1;
+      if (!bHas) return order === 'asc' ? -1 : 1;
+
       if (order === 'asc') {
-        return a.cantidad - b.cantidad;
+        return aOrden - bOrden;
       }
-      return b.cantidad - a.cantidad;
+      return bOrden - aOrden;
     });
   }, []);
 

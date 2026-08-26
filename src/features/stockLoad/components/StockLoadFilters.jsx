@@ -52,7 +52,7 @@ export function StockLoadFilters({
           className="px-4 py-2 bg-primary text-on-primary rounded-md hover:bg-primary/90 transition-colors flex items-center gap-2"
         >
           <Search size={18} />
-          Search
+          Buscar
         </button>
       </div>
     </div>

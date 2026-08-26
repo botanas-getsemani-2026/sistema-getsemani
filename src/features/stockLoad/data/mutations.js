@@ -62,6 +62,8 @@ export function useLoadMutations() {
   };
 
   const saveLoadDetails = async ({ loadId, details }) => {
+    const seenNewProductIds = new Set();
+
     for (const detail of details) {
       if (detail._deleted) {
         const result = await client
@@ -70,6 +72,12 @@ export function useLoadMutations() {
           .eq('id', detail.id);
           console.log('Delete result:', result);
       } else if (detail._isNew) {
+        if (seenNewProductIds.has(detail.productId)) {
+          console.warn('Duplicate new detail skipped:', detail);
+          continue;
+        }
+        seenNewProductIds.add(detail.productId);
+
         await client.from('cargas_detalles').insert({
           id_carga: loadId,
           id_producto: detail.productId,

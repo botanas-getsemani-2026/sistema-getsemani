@@ -257,7 +257,8 @@ export function StockLoadPage() {
 				{hasChanges && (
 					<button
 						onClick={handleSaveLoad}
-						className='flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-md hover:bg-primary/90 transition-colors text-lg'
+						disabled={saveMutation.isPending}
+						className='flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-md hover:bg-primary/90 transition-colors text-lg disabled:opacity-50 disabled:cursor-not-allowed'
 					>
 						<Save size={18} />
 						Guardar carga
@@ -343,14 +344,15 @@ export function StockLoadPage() {
 			)}
 
 			{confirmModalOpen && (
-				<ConfirmModal
-					title='Confirmar'
-					content='¿Estás seguro de que deseas guardar esta carga?'
-					isOpen={confirmModalOpen}
-					onClose={() => setConfirmModalOpen(false)}
-					onConfirm={handleConfirmModal}
-					toast={{ error, success, warning }}
-				/>
+<ConfirmModal
+              title='Confirmar'
+              content='¿Estás seguro de que deseas guardar esta carga?'
+              isOpen={confirmModalOpen}
+              onClose={() => setConfirmModalOpen(false)}
+              onConfirm={handleConfirmModal}
+              isPending={saveMutation.isPending}
+              toast={{ error, success, warning }}
+            />
 			)}
 
 			<AddProductModal

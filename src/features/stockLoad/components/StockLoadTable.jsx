@@ -28,10 +28,19 @@ function LoadCard({
 	const visibleDetails = load.details.filter(d => !d._deleted)
 
 	const sortedDetails = [...visibleDetails].sort((a, b) => {
+		const aOrden = a.product?.orden
+		const bOrden = b.product?.orden
+		const aHas = aOrden != null
+		const bHas = bOrden != null
+
+		if (!aHas && !bHas) return 0
+		if (!aHas) return sortOrder === 'asc' ? 1 : -1
+		if (!bHas) return sortOrder === 'asc' ? -1 : 1
+
 		if (sortOrder === 'asc') {
-			return a.quantity - b.quantity
+			return aOrden - bOrden
 		}
-		return b.quantity - a.quantity
+		return bOrden - aOrden
 	})
 
 	return (
@@ -101,9 +110,6 @@ function LoadCard({
 									Código
 								</th>
 								<th className='px-4 py-3 text-center text-2xl font-medium text-on-surface-variant'>
-									Producto
-								</th>
-								<th className='px-4 py-3 text-center text-2xl font-medium text-on-surface-variant'>
 									<button
 										onClick={e => {
 											e.stopPropagation()
@@ -111,9 +117,12 @@ function LoadCard({
 										}}
 										className='flex items-center gap-1 hover:text-on-background'
 									>
-										Cantidad
+										Producto
 										<ArrowUpDown size={14} />
 									</button>
+								</th>
+								<th className='px-4 py-3 text-center text-2xl font-medium text-on-surface-variant'>
+									Cantidad
 								</th>
                 <th className='px-4 py-3 text-center text-2xl font-medium text-on-surface-variant'>
                   Tipo
