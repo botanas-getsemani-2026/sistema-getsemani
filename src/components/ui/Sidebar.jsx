@@ -7,7 +7,7 @@ import {
 import { createContext, useContext, useState } from "react";
 import { formatUser } from "../../utils/formatUser";
 import { useSignOut } from "../../core/services/auth";
-import logoImage from "../../assets/getsemani-logo-v3-name.webp";
+import logoImage from "@/assets/getsemani-logo-v3-name.webp";
 
 const SidebarContext = createContext();
 

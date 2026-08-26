@@ -1,7 +1,7 @@
 import { EyeClosed } from 'lucide-react'
 import { Eye } from 'lucide-react'
 import { useState } from 'react'
-import logoImage from '../../../assets/getsemani-logo-v3-name.webp'
+import logoImage from '@/assets/getsemani-logo-v3-name.webp'
 
 export default function LoginForm({
 	username,
