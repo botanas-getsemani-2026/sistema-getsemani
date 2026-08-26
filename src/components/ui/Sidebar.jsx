@@ -7,6 +7,7 @@ import {
 import { createContext, useContext, useState } from "react";
 import { formatUser } from "../../utils/formatUser";
 import { useSignOut } from "../../core/services/auth";
+import logoImage from "../../assets/getsemani-logo-v3-name.webp";
 
 const SidebarContext = createContext();
 
@@ -23,7 +24,7 @@ export function Sidebar({ children, user }) {
       <nav className="h-full flex flex-col bg-sidebar border-r shadow-sm">
         <div className="p-4 pb-2 flex justify-between items-center">
           <img
-            src="src/assets/getsemani-logo-v3-name.webp"
+            src={logoImage}
             className={`overflow-hidden transition-all ${expanded ? "max-w-32" : "max-w-0 p-0"}`}
             alt="Getsemani Logo"
           />
