@@ -19,7 +19,7 @@ export function KpiCards({ totalCents, vendorCount, dailyAverageCents, excludedP
 						Total del periodo
 					</span>
 					<span className='text-2xl font-bold text-on-background tabular-nums'>
-						{formatCurrency(totalCents)}
+						{formatCurrency(totalCents + excludedProductsTotal)}
 					</span>
 					<span className='text-xs text-on-surface-variant'>
 						Promedio por día: {formatCurrency(dailyAverageCents)}
@@ -33,7 +33,7 @@ export function KpiCards({ totalCents, vendorCount, dailyAverageCents, excludedP
 				</div>
 				<div className='flex flex-col'>
 					<span className='text-xs uppercase tracking-wide text-on-surface-variant'>
-						Productos excluidos
+						Plátano
 					</span>
 					<span className='text-2xl font-bold text-on-background tabular-nums'>
 						{formatCurrency(excludedProductsTotal)}
@@ -53,7 +53,7 @@ export function KpiCards({ totalCents, vendorCount, dailyAverageCents, excludedP
 						{formatCurrency(totalCents)}
 					</span>
 					<span className='text-xs text-on-surface-variant'>
-						Suma de ventas del rango
+						Suma de ventas del rango sin plátano
 					</span>
 				</div>
 			</article>
